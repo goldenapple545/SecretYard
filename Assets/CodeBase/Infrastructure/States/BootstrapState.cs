@@ -1,6 +1,8 @@
 ﻿using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.Services.SaveLoad;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -9,29 +11,35 @@ namespace CodeBase.Infrastructure.States
         private const string Initial = "Initial";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
+        private readonly AllServices _services;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
+            _services = services;
+
+            RegisterServices();
         }
 
         public void Enter()
         {
-            RegisterServices();
             _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
-        }
-
-        private void EnterLoadLevel() =>
-            _stateMachine.Enter<LoadLevelState, string>("Main");
-
-        private void RegisterServices()
-        {
-            AllServices.Container.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAssets>()));
         }
 
         public void Exit()
         {
+        }
+
+        private void EnterLoadLevel() =>
+            _stateMachine.Enter<LoadProgressState>();
+
+        private void RegisterServices()
+        {
+            _services.RegisterSingle<IAssets>(new AssetProvider());
+            _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
+            _services.RegisterSingle<ISaveLoadService>(new LocalSaveLoadService());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
         }
     }
 }
