@@ -17,21 +17,26 @@ namespace CodeBase.Infrastructure
             };
         }
 
-
         public void Enter<TState>() where TState : class, IState
         {
-            _activeState?.Exit();
-            IState state = GetState<TState>();
-            _activeState = state;
+            IState state = ChangeState<TState>();
             state.Enter();
         }
 
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayLoadState<TPayload>
         {
-            _activeState?.Exit();
-            IPayLoadState<TPayload> state = GetState<TState>();
-            _activeState = state;
+            TState state = ChangeState<TState>();
             state.Enter(payload);
+        }
+
+        private TState ChangeState<TState>() where TState : class, IExitableState
+        {
+            _activeState?.Exit();
+
+            TState state = GetState<TState>();
+            _activeState = state;
+
+            return state;
         }
 
         private TState GetState<TState>() where TState : class, IExitableState =>

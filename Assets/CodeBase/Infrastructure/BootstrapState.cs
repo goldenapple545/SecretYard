@@ -18,10 +18,8 @@
             _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
         }
 
-        private void EnterLoadLevel()
-        {
-            _stateMachine.Enter<LoadLevelState>();
-        }
+        private void EnterLoadLevel() =>
+            _stateMachine.Enter<LoadLevelState, string>("Main");
 
         private void RegisterServices()
         {
