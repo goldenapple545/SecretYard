@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using CodeBase.Logic;
+using Unity.Mathematics;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -10,26 +11,31 @@ namespace CodeBase.Infrastructure
         private const string InitialPointTag = "InitialPoint";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
+        private readonly LoadingCurtain _curtain;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
+            _curtain = curtain;
         }
 
-        public void Enter(string sceneName) =>
-            _sceneLoader.Load(sceneName, HandleLoaded);
-
-        public void Exit()
+        public void Enter(string sceneName)
         {
-
+            _curtain.Show();
+            _sceneLoader.Load(sceneName, HandleLoaded);
         }
+
+        public void Exit() =>
+            _curtain.Hide();
 
         private void HandleLoaded()
         {
             var initialPoint = GameObject.FindWithTag(InitialPointTag);
 
             GameObject player = Instantiate(PlayerPrefab, at: initialPoint.transform.position);
+
+            _stateMachine.Enter<GameLoopState>();
         }
 
         private static GameObject Instantiate(string path)

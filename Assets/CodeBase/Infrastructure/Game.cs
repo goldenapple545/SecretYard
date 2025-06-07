@@ -1,12 +1,14 @@
-﻿namespace CodeBase.Infrastructure
+﻿using CodeBase.Logic;
+
+namespace CodeBase.Infrastructure
 {
     public class Game
     {
         public GameStateMachine stateMachine;
 
-        public Game()
+        public Game(LoadingCurtain curtain)
         {
-            stateMachine = new GameStateMachine(new SceneLoader());
+            stateMachine = new GameStateMachine(new SceneLoader(), curtain);
         }
     }
 }
