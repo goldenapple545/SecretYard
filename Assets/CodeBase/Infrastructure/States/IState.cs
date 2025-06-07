@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design;
-
-namespace CodeBase.Infrastructure
+﻿namespace CodeBase.Infrastructure.States
 {
     public interface IExitableState
     {

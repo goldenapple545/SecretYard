@@ -1,17 +1,16 @@
-﻿using CodeBase.Logic;
-using Unity.Mathematics;
+﻿using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace CodeBase.Infrastructure
+namespace CodeBase.Infrastructure.States
 {
     public class LoadLevelState : IPayLoadState<string>
     {
-        private const string PlayerPrefab = "Player/Player";
         private const string InitialPointTag = "InitialPoint";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
+        private readonly IGameFactory _gameFactory;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
         {
@@ -31,23 +30,9 @@ namespace CodeBase.Infrastructure
 
         private void HandleLoaded()
         {
-            var initialPoint = GameObject.FindWithTag(InitialPointTag);
-
-            GameObject player = Instantiate(PlayerPrefab, at: initialPoint.transform.position);
+            _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
 
             _stateMachine.Enter<GameLoopState>();
-        }
-
-        private static GameObject Instantiate(string path)
-        {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab);
-        }
-
-        private static GameObject Instantiate(string path, Vector3 at)
-        {
-            var playerPrefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(playerPrefab, at, quaternion.identity);
         }
     }
 }

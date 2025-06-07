@@ -1,4 +1,8 @@
-﻿namespace CodeBase.Infrastructure
+﻿using CodeBase.Infrastructure.AssetManagement;
+using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services;
+
+namespace CodeBase.Infrastructure.States
 {
     public class BootstrapState: IState
     {
@@ -23,7 +27,7 @@
 
         private void RegisterServices()
         {
-
+            AllServices.Container.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAssets>()));
         }
 
         public void Exit()
