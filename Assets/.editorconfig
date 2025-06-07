@@ -1,0 +1,74 @@
+# .editorconfig — Unity C# стиль
+
+root = true
+
+[*.cs]
+
+############################
+# Отступы и пробелы
+############################
+
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+############################
+# Именование
+############################
+
+# private/protected fields: _camelCase
+dotnet_naming_rule.private_protected_fields_should_be_camel_with_underscore.severity = suggestion
+dotnet_naming_rule.private_protected_fields_should_be_camel_with_underscore.symbols = private_protected_fields
+dotnet_naming_rule.private_protected_fields_should_be_camel_with_underscore.style = camel_with_underscore
+
+dotnet_naming_symbols.private_protected_fields.applicable_accessibilities = private, protected
+dotnet_naming_symbols.private_protected_fields.applicable_kinds = field
+dotnet_naming_symbols.private_protected_fields.required_modifiers = readonly
+
+dotnet_naming_style.camel_with_underscore.capitalization = camel_case
+dotnet_naming_style.camel_with_underscore.required_prefix = _
+dotnet_naming_style.camel_with_underscore.required_suffix =
+
+# public fields: camelCase
+dotnet_naming_rule.public_fields_should_be_camel.severity = suggestion
+dotnet_naming_rule.public_fields_should_be_camel.symbols = public_fields
+dotnet_naming_rule.public_fields_should_be_camel.style = camel
+
+dotnet_naming_symbols.public_fields.applicable_accessibilities = public
+dotnet_naming_symbols.public_fields.applicable_kinds = field
+
+dotnet_naming_style.camel.capitalization = camel_case
+dotnet_naming_style.camel.required_prefix =
+dotnet_naming_style.camel.required_suffix =
+
+# Properties: PascalCase
+dotnet_naming_rule.properties_should_be_pascal.severity = suggestion
+dotnet_naming_rule.properties_should_be_pascal.symbols = properties
+dotnet_naming_rule.properties_should_be_pascal.style = pascal
+
+dotnet_naming_symbols.properties.applicable_kinds = property
+dotnet_naming_style.pascal.capitalization = pascal_case
+
+# Methods: PascalCase
+dotnet_naming_rule.methods_should_be_pascal.severity = suggestion
+dotnet_naming_rule.methods_should_be_pascal.symbols = methods
+dotnet_naming_rule.methods_should_be_pascal.style = pascal
+
+dotnet_naming_symbols.methods.applicable_kinds = method
+
+# Interfaces: I-prefixed + PascalCase
+dotnet_naming_rule.interfaces_should_be_iprefix.severity = suggestion
+dotnet_naming_rule.interfaces_should_be_iprefix.symbols = interfaces
+dotnet_naming_rule.interfaces_should_be_iprefix.style = pascal_with_i
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_style.pascal_with_i.capitalization = pascal_case
+dotnet_naming_style.pascal_with_i.required_prefix = I
+
+############################
+# Using директивы
+############################
+
+dotnet_sort_system_directives_first = true
+file_header_template = unset
