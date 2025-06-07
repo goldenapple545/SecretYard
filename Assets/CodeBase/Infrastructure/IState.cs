@@ -1,8 +1,19 @@
-﻿namespace CodeBase.Infrastructure
+﻿using System.ComponentModel.Design;
+
+namespace CodeBase.Infrastructure
 {
-    public interface IState
+    public interface IExitableState
+    {
+        void Exit();
+    }
+
+    public interface IState: IExitableState
     {
         void Enter();
-        void Exit();
+    }
+
+    public interface IPayLoadState<TPayload> : IExitableState
+    {
+        void Enter(TPayload payload);
     }
 }
