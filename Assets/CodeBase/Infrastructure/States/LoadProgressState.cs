@@ -26,15 +26,8 @@ namespace CodeBase.Infrastructure.States
 
         public async void Enter()
         {
-            try
-            {
-                await LoadProgressOrInitNew();
-                _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.worldData.positionOnLevel.level);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
+            await LoadProgressOrInitNew();
+            _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.worldData.positionOnLevel.level);
         }
 
         public void Exit()

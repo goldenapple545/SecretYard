@@ -30,7 +30,6 @@ namespace CodeBase.Player
             characterController.enabled = false;
             Debug.Log(to.AsUnityVector().ToString());
             characterController.SetPosition(to.AsUnityVector());
-            //transform.position = to.AsUnityVector();
             characterController.enabled = true;
         }
 

@@ -6,13 +6,13 @@ namespace CodeBase.Infrastructure
 {
     public class GameBootstrapper: MonoBehaviour, ICoroutineRunner
     {
-        public LoadingCurtain curtain;
+        public LoadingCurtain curtainPrefab;
 
         private Game _game;
 
         private void Awake()
         {
-            _game = new Game(curtain);
+            _game = new Game(Instantiate(curtainPrefab));
             _game.stateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);

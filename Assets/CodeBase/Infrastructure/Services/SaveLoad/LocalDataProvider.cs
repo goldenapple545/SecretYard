@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services.SaveLoad
 {
@@ -8,7 +7,6 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
         public async UniTask<T> LoadDataAsync<T>(string key)
         {
             var loadData = await IO.LoadData<T>(key);
-            Debug.Log(loadData.ToString());
             return loadData;
         }
 
