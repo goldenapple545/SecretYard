@@ -10,7 +10,6 @@ namespace CodeBase.Infrastructure.States
     public class LoadProgressState : IState
     {
         private const string InitialLevel = "Main";
-        private const string PlayerProgressKey = "Player";
 
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
@@ -44,7 +43,7 @@ namespace CodeBase.Infrastructure.States
 
         private async UniTask LoadProgressOrInitNew() =>
             _progressService.Progress =
-                await _saveLoadService.LoadDataAsync<PlayerProgress>(PlayerProgressKey)
+                await _saveLoadService.LoadProgress<PlayerProgress>()
                 ?? NewProgress();
 
         private PlayerProgress NewProgress() =>

@@ -28,7 +28,9 @@ namespace CodeBase.Player
         private void Warp(Vector3Data to)
         {
             characterController.enabled = false;
-            transform.position = to.AsUnityVector();
+            Debug.Log(to.AsUnityVector().ToString());
+            characterController.SetPosition(to.AsUnityVector());
+            //transform.position = to.AsUnityVector();
             characterController.enabled = true;
         }
 

@@ -8,6 +8,8 @@ namespace CodeBase.Data
         public string level;
         public Vector3Data position;
 
+        public PositionOnLevel()
+        {}
         public PositionOnLevel(string level, Vector3Data position)
         {
             this.level = level;
@@ -17,6 +19,11 @@ namespace CodeBase.Data
         public PositionOnLevel(string initialLevel)
         {
             this.level = initialLevel;
+        }
+
+        public override string ToString()
+        {
+            return $"position: {position}";
         }
     }
 }

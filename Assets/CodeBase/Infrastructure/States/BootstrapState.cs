@@ -8,7 +8,9 @@ namespace CodeBase.Infrastructure.States
 {
     public class BootstrapState: IState
     {
+        private const string PlayerProgressKey = "Player";
         private const string Initial = "Initial";
+
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
@@ -38,8 +40,11 @@ namespace CodeBase.Infrastructure.States
         {
             _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-            _services.RegisterSingle<ISaveLoadService>(new LocalSaveLoadService());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(new LocalDataProvider(),
+                _services.Single<IPersistentProgressService>(),
+                _services.Single<IGameFactory>(),
+                PlayerProgressKey));
         }
     }
 }

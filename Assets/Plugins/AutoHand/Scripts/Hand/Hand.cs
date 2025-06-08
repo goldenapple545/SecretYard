@@ -1,13 +1,10 @@
 using NaughtyAttributes;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.XR;
 
 namespace Autohand {
     public enum FingerEnum {
@@ -101,7 +98,7 @@ namespace Autohand {
 
 
 
-        ///Events for all my programmers out there :)/// 
+        ///Events for all my programmers out there :)///
         /// <summary>Called when the grab event is triggered, event if nothing is being grabbed</summary>
         public event HandGrabEvent OnTriggerGrab;
         /// <summary>Called at the very start of a grab before anything else</summary>
@@ -168,7 +165,7 @@ namespace Autohand {
         }
 
 
-        
+
 
         protected override void Awake() {
             SetLayerRecursive(transform, LayerMask.NameToLayer(left ? Hand.leftHandLayerName : Hand.rightHandLayerName));
@@ -629,7 +626,7 @@ namespace Autohand {
         public RaycastHit GetHighlightHit() {
             highlightHit.point = handGrabPoint.position;
             highlightHit.normal = handGrabPoint.up;
-            return highlightHit; 
+            return highlightHit;
         }
 
 
@@ -870,7 +867,7 @@ namespace Autohand {
         //=================================================================
         //=================================================================
         public Hand copyFromHand;
-            
+
         [Button("Copy Pose"), ContextMenu("COPY POSE")]
         public void CopyPose()
         {
@@ -960,7 +957,7 @@ namespace Autohand {
             }
         }
 
-        //Highlighting doesn't need to be called every update, it can be called every 4th update without causing any noticable differrences 
+        //Highlighting doesn't need to be called every update, it can be called every 4th update without causing any noticable differrences
         IEnumerator HighlightUpdate(float timestep) {
             //This will smooth out the highlight calls to help prevent lag spikes
             if(left)
@@ -980,7 +977,7 @@ namespace Autohand {
             /////////////////////////
             ////Initialize values////
             /////////////////////////
-            
+
 
             if(!CanGrab(grab))
                 yield break;
@@ -1041,7 +1038,7 @@ namespace Autohand {
             /////////////////
             ////Sets Pose////
             /////////////////
-            
+
             HandPoseData startGrabPose;
             if(GetGrabPose(holdingObj, out var tempGrabPose)) {
                 startGrabPose = new HandPoseData(this, tempGrabPose.transform);
@@ -1160,7 +1157,7 @@ namespace Autohand {
                     //Disable grabbable while item is moving towards hand
                     bool useGravity = holdingObj.body.useGravity;
                     holdingObj.body.useGravity = false;
-                    
+
                     //Loop until the object is at the hand
                     for(float i = 0; i < adjustedGrabTime; i += Time.deltaTime) {
                         if(holdingObj != null) {
@@ -1348,7 +1345,7 @@ namespace Autohand {
                         if (handPoseArea != null)
                             UpdatePose(preHandPoseAreaPose, handPoseArea.transitionTime);
                         handPoseArea?.OnHandExit?.Invoke(this);
-                        handPoseArea = null; 
+                        handPoseArea = null;
                     }
                     else if (holdingObj != null)
                     {
@@ -1356,7 +1353,7 @@ namespace Autohand {
                         handPoseArea = null;
                     }
                 }
-                
+
                 catch(MissingReferenceException)
                 {
                     handPoseArea = null;
